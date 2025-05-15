@@ -1,7 +1,6 @@
 "use client";
 
-import React, { useEffect, useState, use } from "react";
-import Link from "next/link";
+import React, { useEffect, useState } from "react";
 
 interface Comment {
   id: number;
@@ -23,7 +22,7 @@ interface PostDetailPageProps {
 }
 
 export default function PostDetailPage(props: PostDetailPageProps) {
-  const params = use(props.params);
+  const params = React.use(props.params);
   const id = params.id;
 
   const [post, setPost] = useState<Post | null>(null);
