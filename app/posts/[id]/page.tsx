@@ -42,8 +42,12 @@ export default function PostDetailPage(props: PostDetailPageProps) {
         if (!res.ok) throw new Error("Failed to fetch post");
         const data = await res.json();
         setPost(data);
-      } catch (err: any) {
-        setErrorPost(err.message);
+      } catch (err: unknown) {
+        if (err instanceof Error) {
+          setErrorPost(err.message);
+        } else {
+          setErrorPost("An unknown error occurred");
+        }
       } finally {
         setLoadingPost(false);
       }
@@ -55,8 +59,12 @@ export default function PostDetailPage(props: PostDetailPageProps) {
         if (!res.ok) throw new Error("Failed to fetch comments");
         const data = await res.json();
         setComments(data);
-      } catch (err: any) {
-        setErrorComments(err.message);
+      } catch (err: unknown) {
+        if (err instanceof Error) {
+          setErrorComments(err.message);
+        } else {
+          setErrorComments("An unknown error occurred");
+        }
       } finally {
         setLoadingComments(false);
       }

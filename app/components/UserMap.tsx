@@ -1,13 +1,8 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useRef } from "react";
 
-interface UserMapProps {
-  lat: number;
-  lng: number;
-}
-
-export default function UserMap({ lat, lng }: UserMapProps) {
+export default function UserMap() {
   const mapContainerRef = useRef<HTMLDivElement | null>(null);
 
   return (

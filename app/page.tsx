@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
-import Sidebar from "./components/Sidebar";
 
 const Chart = dynamic(() => import("react-apexcharts"), { ssr: false });
 
@@ -12,7 +11,6 @@ export default function Dashboard() {
   const [commentCount, setCommentCount] = useState(0);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   useEffect(() => {
     const fetchCounts = async () => {
@@ -32,8 +30,12 @@ export default function Dashboard() {
         setUserCount(users.length);
         setPostCount(posts.length);
         setCommentCount(comments.length);
-      } catch (err: any) {
-        setError(err.message);
+      } catch (err: unknown) {
+        if (err instanceof Error) {
+          setError(err.message);
+        } else {
+          setError("An unknown error occurred");
+        }
       } finally {
         setLoading(false);
       }

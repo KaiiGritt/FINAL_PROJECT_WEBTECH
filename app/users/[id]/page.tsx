@@ -57,8 +57,12 @@ export default function UserProfilePage({ params }: UserProfilePageProps) {
         if (!res.ok) throw new Error("Failed to fetch user");
         const data = await res.json();
         setUser(data);
-      } catch (err: any) {
-        setErrorUser(err.message);
+      } catch (err: unknown) {
+        if (err instanceof Error) {
+          setErrorUser(err.message);
+        } else {
+          setErrorUser("An unknown error occurred");
+        }
       } finally {
         setLoadingUser(false);
       }
@@ -70,8 +74,12 @@ export default function UserProfilePage({ params }: UserProfilePageProps) {
         if (!res.ok) throw new Error("Failed to fetch posts");
         const data = await res.json();
         setPosts(data);
-      } catch (err: any) {
-        setErrorPosts(err.message);
+      } catch (err: unknown) {
+        if (err instanceof Error) {
+          setErrorPosts(err.message);
+        } else {
+          setErrorPosts("An unknown error occurred");
+        }
       } finally {
         setLoadingPosts(false);
       }
@@ -111,7 +119,7 @@ export default function UserProfilePage({ params }: UserProfilePageProps) {
           {/* Map */}
           <div className="col-span-2 bg-primary p-10 rounded-2xl shadow-md">
             {user?.address.geo.lat && user?.address.geo.lng ? (
-              <UserMap lat={parseFloat(user.address.geo.lat)} lng={parseFloat(user.address.geo.lng)} />
+<UserMap />
             ) : (
               <p className="text-secondary text-center">Map data not available</p>
             )}
